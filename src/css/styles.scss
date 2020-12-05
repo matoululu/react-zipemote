@@ -32,7 +32,7 @@ body {
   margin: 0 auto;
   max-width: 750px;
   width: calc(100% - 2rem);
-  padding: 0.5rem 1rem;
+  padding: 1rem;
 }
 
 main.container {
@@ -73,7 +73,6 @@ button {
 
 header {
   background:transparent;
-  padding: 1rem;
   line-height: 1;
   color: $primary;
 
@@ -87,10 +86,16 @@ header {
 .logo-container {
   @include flexbox();
   font-size: 16px;
+
+  @media only screen and (max-width: 900px) {
+    h1 {
+      display: none;
+    }
+  }
 }
 
 .logo {
-  max-height: 32px;
+  height: 32px;
   margin-right: 0.5rem;
 }
 
@@ -115,6 +120,8 @@ header {
   background: white;
   color: $bg;
   border-radius: 5px;
+  padding: 1rem;
+  text-align: center;
 
   input {
     position: absolute;
