@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/react-zipemote/static/css/main.9f3e8437.chunk.css",
-    "main.js": "/react-zipemote/static/js/main.5ab91961.chunk.js",
-    "main.js.map": "/react-zipemote/static/js/main.5ab91961.chunk.js.map",
+    "main.js": "/react-zipemote/static/js/main.bd966271.chunk.js",
+    "main.js.map": "/react-zipemote/static/js/main.bd966271.chunk.js.map",
     "runtime-main.js": "/react-zipemote/static/js/runtime-main.aeabaf6c.js",
     "runtime-main.js.map": "/react-zipemote/static/js/runtime-main.aeabaf6c.js.map",
     "static/js/2.33be7e0d.chunk.js": "/react-zipemote/static/js/2.33be7e0d.chunk.js",
@@ -13,12 +13,12 @@
     "static/css/main.9f3e8437.chunk.css.map": "/react-zipemote/static/css/main.9f3e8437.chunk.css.map",
     "static/js/2.33be7e0d.chunk.js.LICENSE.txt": "/react-zipemote/static/js/2.33be7e0d.chunk.js.LICENSE.txt",
     "static/media/upload.651df24b.svg": "/react-zipemote/static/media/upload.651df24b.svg",
-    "static/media/zipemote.41cc9d41.svg": "/react-zipemote/static/media/zipemote.41cc9d41.svg"
+    "static/media/zipemote.f03f571a.svg": "/react-zipemote/static/media/zipemote.f03f571a.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.aeabaf6c.js",
     "static/js/2.33be7e0d.chunk.js",
     "static/css/main.9f3e8437.chunk.css",
-    "static/js/main.5ab91961.chunk.js"
+    "static/js/main.bd966271.chunk.js"
   ]
 }
