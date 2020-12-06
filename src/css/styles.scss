@@ -85,9 +85,10 @@ header {
 
 .logo-container {
   @include flexbox();
+  @include align-items(center);
   font-size: 16px;
 
-  @media only screen and (max-width: 900px) {
+  @media only screen and (max-width: 480px) {
     h1 {
       display: none;
     }
@@ -95,8 +96,8 @@ header {
 }
 
 .logo {
-  height: 32px;
-  margin-right: 0.5rem;
+  height: 48px;
+  margin-right: 1rem;
 }
 
 .link-container a {
@@ -134,7 +135,50 @@ header {
   }
 }
 
+.uploader__form {
+  @include flexbox();
+  @include justify-content(center);
+  @include align-items(center);
+  @include flex-direction(column);
+  width: 100%;
+  height: 100%;
+}
+
 .upload-icon {
   height: 48px;
   margin-bottom: 1rem;
+}
+
+.loading-icon {
+  height: 48px;
+}
+
+.preview {
+  @include flexbox();
+  @include justify-content(center);
+  margin-top: 1rem;
+  list-style: none;
+
+  li {
+    @include flexbox();
+    @include justify-content(center);
+    @include align-items(center);
+    background-image: url(../images/transparency-bg.jpg);
+    border-radius: 5px;
+
+    &:first-child {
+      height: 28px;
+      width: 28px;
+    }
+
+    &:nth-child(2) {
+      height: 56px;
+      width: 56px;
+    }
+
+    &:last-child {
+      height: 112px;
+      width: 112px;
+    }
+  }
 }

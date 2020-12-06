@@ -1,4 +1,4 @@
-import logo from '../logo.svg';
+import logo from '../images/zipemote.svg';
 
 function Header() {
   return (
