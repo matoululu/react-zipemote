@@ -1,8 +1,9 @@
 import upload from '../images/upload.svg';
-import loading from '../images/loading.gif';
 import React from "react";
 import Dropzone from 'react-dropzone';
 import Resizer from 'react-image-file-resizer';
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver';
 
 class Uploader extends React.Component {
 
@@ -10,20 +11,29 @@ class Uploader extends React.Component {
     super(props);
     this.state = {
       showError:false,
-      imageResized: false,
-      isInactive: true
+      imageResized: false
     };
+    this.originalImage = '';
     this.resizedImageArray = [];
     this.sizeArray = [28,56,112];
+    this.zip = new JSZip();
   }
 
-  handleAcceptedDrop = async (file) => {
-    await this.resizeFile(file[0]);
-
+  handleReset = () => {
+    this.originalImage = '';
+    this.resizedImageArray = [];
+    this.zip = new JSZip();
     this.setState(state => ({
-      isInactive: true,
-      imageResized: true
+      imageResized: false,
+      showError: false
     }));
+  }
+
+  handleDownload = () => {
+    console.log(this.zip)
+    this.zip.generateAsync({type:"blob"}).then((content) => {
+      saveAs(content, `${Date.now()}.zip`);
+    });
   }
 
   handleRejectedDrop = () => {
@@ -32,33 +42,35 @@ class Uploader extends React.Component {
     }));
   }
 
-  resizeFile = (blob) => new Promise(resolve => {
+  handleAcceptedDrop = async (file) => {
+    this.originalImage = URL.createObjectURL(file[0]);
+    await this.resizeFile(file[0]);
 
     this.setState(state => ({
-      isInactive: false,
+      imageResized: true
+    }));
+  }
+
+  resizeFile = async (blob) => {
+    this.resizedImageArray = [];
+    this.setState(state => ({
       imageResized: false
     }));
 
-    this.resizedImageArray = [];
-
-    this.sizeArray.map((size) => {
-      Resizer.imageFileResizer(blob, size, size, 'PNG', 100, 0,
-      uri => {
-        resolve(this.resizedImageArray.push(uri));
-      },
-      'base64'
-      );
-
-      return true;
-    })
-  });
+    await Promise.all(this.sizeArray.map((size) => {
+      return new Promise((resolve) => {
+        Resizer.imageFileResizer(blob, size, size, 'PNG', 100, 0, uri => resolve(this.resizedImageArray.push(uri)), 'base64');
+        this.zip.file(`${size}.png`, blob);
+      });
+    }));
+  }
 
   render() {
     return (
       <main className="container">
         {this.state.showError ? <p className="warning">Image type must be .jpeg or .png</p> : null }
         <div className="uploader">
-        {this.state.isInactive ?
+        {!this.state.imageResized ?
           <Dropzone onDropAccepted={this.handleAcceptedDrop} onDropRejected={this.handleRejectedDrop} accept="image/jpeg, image/png">
             {({getRootProps, getInputProps}) => (
               <div className="uploader__form" {...getRootProps()}>
@@ -68,16 +80,25 @@ class Uploader extends React.Component {
               </div>
             )}
           </Dropzone>
-          : <div className="uploader"><img src={loading} className="loading-icon" alt="Loading" /></div> }
-        </div>
+          :
+          <div className="preview">
+            <span className="source"><img src={this.originalImage} alt="Source" className="source-image"/></span>
 
-        {this.state.imageResized ?
-        <ul className="preview">
-          {this.resizedImageArray.map(preview => {
-            return <li key={preview}><img src={preview} alt="preview"/></li>
-          })}
-        </ul>
-        : null }
+            <div className="preview__container">
+              <ul className="preview-list">
+                {this.resizedImageArray.map(preview => {
+                  return <li key={preview}><img src={preview} alt="preview"/></li>
+                })}
+              </ul>
+              <div className="preview__buttons">
+                <button onClick={this.handleDownload} className="get-zip">Download .zip</button>
+                <button onClick={this.handleReset} className="secondary reset">Reset</button>
+              </div>
+
+            </div>
+          </div>
+          }
+        </div>
 
       </main>
     );

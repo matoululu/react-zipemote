@@ -42,11 +42,17 @@ main.container {
 button {
   padding: 1rem 2rem;
   cursor: pointer;
-  background-color: $primary;
-  border: 0;
+  background-color: $bg;
+  border: 2px solid $bg;
   color: white;
   font-weight: 700;
   font-size: 1rem;
+  border-radius: 5px;
+
+  &.secondary {
+    background-color: transparent;
+    color: $bg;
+  }
 }
 
 .warning {
@@ -124,6 +130,10 @@ header {
   padding: 1rem;
   text-align: center;
 
+  @media only screen and (max-width: 480px) {
+    height: auto;
+  }
+
   input {
     position: absolute;
     top: -50rem;
@@ -149,15 +159,62 @@ header {
   margin-bottom: 1rem;
 }
 
-.loading-icon {
-  height: 48px;
+.preview__container {
+  @include flexbox();
+  @include justify-content(space-between);
+  @include flex-direction(column);
 }
 
 .preview {
   @include flexbox();
+  @include justify-content(space-between);
+  width: 100%;
+  height: 100%;
+  @media only screen and (max-width: 480px) {
+    @include flex-direction(column);
+  }
+}
+
+.source {
+  @include flexbox();
   @include justify-content(center);
-  margin-top: 1rem;
+  @include align-items(center);
+  @include flex-grow(2);
+  background-image: url(../images/transparency-bg.jpg);
+  border-radius: 5px;
+  border: 1px solid #eee;
+  height: 100%;
+  margin-right: 1rem;
+
+  @media only screen and (max-width: 480px) {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+}
+.source-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.preview__buttons {
+  @include flexbox();
+  @include flex-direction(column);
+}
+
+.reset {
+  margin-top: 0.5rem;
+}
+
+.preview-list {
+  @include flexbox();
+  @include justify-content(space-between);
   list-style: none;
+  margin: 0;
+
+  @media only screen and (max-width: 480px) {
+    margin-bottom: 1rem;
+  }
 
   li {
     @include flexbox();
@@ -169,6 +226,7 @@ header {
     &:first-child {
       height: 28px;
       width: 28px;
+      margin-right: 1rem;
     }
 
     &:nth-child(2) {
@@ -179,6 +237,7 @@ header {
     &:last-child {
       height: 112px;
       width: 112px;
+      margin-left: 1rem;
     }
   }
 }
