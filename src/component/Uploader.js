@@ -31,7 +31,6 @@ class Uploader extends React.Component {
   }
 
   handleDownload = () => {
-    console.log(this.zip)
     this.zip.generateAsync({type:"blob"}).then((content) => {
       saveAs(content, `${Date.now()}.zip`);
     });
@@ -76,17 +75,17 @@ class Uploader extends React.Component {
             {({getRootProps, getInputProps}) => (
               <div className="uploader__form" {...getRootProps()}>
                 <input {...getInputProps()} />
-                <img src={upload} className="upload-icon" alt="Upload" />
+                <img src={upload} className="uploader__icon" alt="Upload" />
                 <label>Drop your .png or .jpg file or click here!</label>
               </div>
             )}
           </Dropzone>
           :
           <div className="preview">
-            <span className="source"><img src={this.originalImage} alt="Source" className="source-image"/></span>
+            <span className="preview__source"><img src={this.originalImage} alt="Source" className="preview__source-image"/></span>
 
             <div className="preview__container">
-              <ul className="preview-list">
+              <ul className="preview__list">
                 {this.resizedImageArray.map(preview => {
                   return <li key={preview}><img src={preview} alt="preview"/></li>
                 })}

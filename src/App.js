@@ -1,4 +1,5 @@
-import Header from './layout/Header.js';
+import Header from './component/Header.js';
+import Footer from './component/Footer.js';
 import Uploader from './component/Uploader.js';
 import './css/styles.scss';
 
@@ -7,6 +8,7 @@ function App() {
     <div className="App">
       <Header/>
       <Uploader/>
+      <Footer/>
     </div>
   );
 }
