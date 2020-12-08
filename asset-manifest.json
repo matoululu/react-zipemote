@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/react-zipemote/static/css/main.a5b59497.chunk.css",
-    "main.js": "/react-zipemote/static/js/main.c4be3a37.chunk.js",
-    "main.js.map": "/react-zipemote/static/js/main.c4be3a37.chunk.js.map",
+    "main.js": "/react-zipemote/static/js/main.d6a45358.chunk.js",
+    "main.js.map": "/react-zipemote/static/js/main.d6a45358.chunk.js.map",
     "runtime-main.js": "/react-zipemote/static/js/runtime-main.aeabaf6c.js",
     "runtime-main.js.map": "/react-zipemote/static/js/runtime-main.aeabaf6c.js.map",
     "static/js/2.33be7e0d.chunk.js": "/react-zipemote/static/js/2.33be7e0d.chunk.js",
@@ -19,6 +19,6 @@
     "static/js/runtime-main.aeabaf6c.js",
     "static/js/2.33be7e0d.chunk.js",
     "static/css/main.a5b59497.chunk.css",
-    "static/js/main.c4be3a37.chunk.js"
+    "static/js/main.d6a45358.chunk.js"
   ]
 }
