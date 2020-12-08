@@ -4,6 +4,7 @@ import Dropzone from 'react-dropzone';
 import Resizer from 'react-image-file-resizer';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
+import Chat from '../component/Chat.js';
 
 class Uploader extends React.Component {
 
@@ -100,6 +101,7 @@ class Uploader extends React.Component {
           }
         </div>
 
+        {this.state.imageResized ? <Chat emote={this.originalImage}/> : null }
       </main>
     );
   }
