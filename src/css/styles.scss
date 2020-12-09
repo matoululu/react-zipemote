@@ -214,10 +214,11 @@ button {
     @include justify-content(center);
     @include align-items(flex-start);
 
-    border-radius: 5px;
-
     img {
       background-image: url(../images/transparency-bg.jpg);
+      padding: 0.5rem;
+      border-radius: 5px;
+      border: 1px solid #eee;
     }
 
     &:first-child {

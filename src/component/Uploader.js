@@ -1,10 +1,10 @@
 import upload from '../images/upload.svg';
+import Chat from '../component/Chat.js';
 import React from "react";
-import Dropzone from 'react-dropzone';
-import Resizer from 'react-image-file-resizer';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
-import Chat from '../component/Chat.js';
+import Dropzone from 'react-dropzone';
+import Resizer from 'react-image-file-resizer';
 
 class Uploader extends React.Component {
 
@@ -31,8 +31,15 @@ class Uploader extends React.Component {
   }
 
   handleDownload = () => {
+    this.resizedImageArray.map((image, index) => {
+      const file = this.dataURItoBlob(image);
+      this.zip.file(`${this.sizeArray[index]}.png`, file);
+
+      return true;
+    })
+
     this.zip.generateAsync({type:"blob"}).then((content) => {
-      saveAs(content, `${Date.now()}.zip`);
+      saveAs(content, `zipemote--${Date.now()}.zip`);
     });
   }
 
@@ -44,27 +51,42 @@ class Uploader extends React.Component {
 
   handleAcceptedDrop = async (file) => {
     this.originalImage = URL.createObjectURL(file[0]);
-    await this.resizeFile(file[0]);
-
-    this.setState(state => ({
-      imageResized: true
-    }));
-  }
-
-  resizeFile = async (blob) => {
     this.resizedImageArray = [];
     this.setState(state => ({
       imageResized: false
     }));
 
-    await Promise.all(this.sizeArray.map((size) => {
-      return new Promise((resolve) => {
-        Resizer.imageFileResizer(blob, size, size, 'PNG', 100, 0, uri => resolve(this.resizedImageArray.push(uri)), 'base64');
-        this.zip.file(`${size}.png`, blob);
-      });
-    }));
+    const resizeImages = this.sizeArray.map(async (size) => {
+      const image = await this.resizeFile(file[0], size);
+      this.resizedImageArray.push(image);
+
+    })
+
+    Promise.all(resizeImages).then(() => {
+      this.setState(state => ({
+        imageResized: true
+      }));
+    })
   }
 
+  resizeFile = (file, size) => new Promise(resolve => {
+    Resizer.imageFileResizer(file, size, size, 'PNG', 100, 0,
+    uri => {
+      resolve(uri);
+    },
+    'base64'
+    );
+  });
+
+  dataURItoBlob(dataURI) {
+    var byteString = atob(dataURI.split(',')[1]);
+    var ab = new ArrayBuffer(byteString.length);
+    var ia = new Uint8Array(ab);
+    for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([ab], { type: 'image/jpeg' });
+  }
   render() {
     return (
       <main className="container">
@@ -100,7 +122,7 @@ class Uploader extends React.Component {
           }
         </div>
 
-        {this.state.imageResized ? <Chat emote={this.originalImage}/> : null }
+        {this.state.imageResized ? <Chat emote={this.resizedImageArray[0]}/> : null }
       </main>
     );
   }
